@@ -6,6 +6,7 @@
   "repository": "git@github.com:kimobrian/GraphQL-Course.git",
   "author": "O'Brian Kimo",
   "license": "MIT",
+  "private": true,
   "workspaces": [
     "packages/*"
   ]
