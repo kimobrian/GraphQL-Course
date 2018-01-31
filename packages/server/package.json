@@ -1,0 +1,8 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "A Server implementation of GraphQl using Express",
+  "main": "index.js",
+  "author": "O'Brian Kimo",
+  "license": "MIT"
+}

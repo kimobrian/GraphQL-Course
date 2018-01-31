@@ -1,0 +1,12 @@
+{
+  "name": "graphql-course",
+  "version": "1.0.0",
+  "description": "Mono repo for a GraphQL course",
+  "main": "index.js",
+  "repository": "git@github.com:kimobrian/GraphQL-Course.git",
+  "author": "O'Brian Kimo",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ]
+}
