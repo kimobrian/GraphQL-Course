@@ -20,6 +20,9 @@ type Mutation {
   createAuthor(name: String!, gender: String!) : Author,
   updateAuthor(id: ID!, name: String, gender: String, age: Int): Author
 }
+type Subscription {
+	createAuthorWithSubscription: Author
+}
 `;
 
 // Put together a schema
