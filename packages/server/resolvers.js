@@ -22,7 +22,7 @@ const resolvers = {
         }
       }
       authors.push(newAuthor);
-      pubsub.publish(AUTHORS_TOPIC, { newAuthor });
+      pubsub.publish(AUTHORS_TOPIC, { createAuthorWithSubscription: newAuthor });
       return newAuthor;
     },
     updateAuthor: (obj, { id, name, gender, age}) => {
