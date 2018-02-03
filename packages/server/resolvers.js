@@ -1,4 +1,8 @@
 const authors = require('./authors');
+const { PubSub } = require('graphql-subscriptions');
+
+const AUTHORS_TOPIC = 'newAuthor';
+const pubsub = new PubSub();
 
 // The resolvers
 const resolvers = {
@@ -18,6 +22,7 @@ const resolvers = {
         }
       }
       authors.push(newAuthor);
+      pubsub.publish(AUTHORS_TOPIC, { newAuthor });
       return newAuthor;
     },
     updateAuthor: (obj, { id, name, gender, age}) => {
@@ -32,6 +37,11 @@ const resolvers = {
       } else {
         throw new Error('Author ID not found');
       }
+    }
+  },
+  Subscription: {
+    createAuthorWithSubscription: {
+      subscribe: () => pubsub.asyncIterator(AUTHORS_TOPIC)
     }
   }
 };
