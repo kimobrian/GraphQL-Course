@@ -1,5 +1,5 @@
 const express = require('express');
-const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
+const { graphqlExpress, graphiqlExpress } = require('graphql-server-express');
 const bodyParser = require('body-parser');
 const schema = require('./schema');
 const resolvers = require('./resolvers');
