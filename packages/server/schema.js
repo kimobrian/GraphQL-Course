@@ -1,3 +1,6 @@
+const { makeExecutableSchema } = require('graphql-tools');
+const resolvers = require('./resolvers');
+
 // The GraphQL schema in string form
 const typeDefs = `
 type Author {
@@ -19,4 +22,10 @@ type Mutation {
 }
 `;
 
-module.exports = typeDefs;
+// Put together a schema
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers
+});
+
+module.exports = schema;

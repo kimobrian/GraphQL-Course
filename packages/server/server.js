@@ -1,15 +1,8 @@
 const express = require('express');
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
-const { makeExecutableSchema } = require('graphql-tools');
 const bodyParser = require('body-parser');
-const typeDefs = require('./schema');
+const schema = require('./schema');
 const resolvers = require('./resolvers');
-
-// Put together a schema
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers
-});
  
 const PORT = 3500;
  
