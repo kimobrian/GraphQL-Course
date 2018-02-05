@@ -1,0 +1,15 @@
+{
+  "name": "yoga",
+  "version": "1.0.0",
+  "description": "Simple Server Using GraphQL Yoga",
+  "main": "index.js",
+  "repository": "git@github.com:kimobrian/GraphQL-Course.git",
+  "author": "O'Brian Kimo",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "graphql-yoga": "^1.2.1"
+  }
+}
