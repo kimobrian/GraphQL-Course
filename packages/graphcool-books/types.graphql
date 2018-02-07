@@ -3,21 +3,24 @@
 
 type User @model {
   id: ID! @isUnique
+  createdAt: DateTime!
+  updatedAt: DateTime!
   name: String
   dateOfBirth: DateTime
 
-  # Uncomment below - you can declare relations between models like this
+  # declare relations between models
 
-  # posts: [Post!]! @relation(name: "UserPosts")
+  books: [Book!]! @relation(name: "UserBooks")
 }
 
 
-# Uncomment the model below as well
+type Book @model {
+  id: ID! @isUnique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  title: String!
+  description: String!
 
-# type Post @model {
-#   id: ID! @isUnique
-#   title: String!
-#
-#   # Every relation also required a back-relation (to determine 1:1, 1:n or n:m)
-#   author: User! @relation(name: "UserPosts")
-# }
+  # Every relation also required a back-relation (to determine 1:1, 1:n or n:m)
+  owner: User! @relation(name: "UserBooks")
+}
