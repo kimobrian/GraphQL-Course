@@ -11,6 +11,9 @@ type User @model {
   # declare relations between models
 
   books: [Book!]! @relation(name: "UserBooks")
+
+  email: String! @isUnique
+  password: String!
 }
 
 
