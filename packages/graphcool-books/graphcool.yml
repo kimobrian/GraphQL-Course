@@ -31,7 +31,6 @@ functions:
 # preconfigured the wildcard ("*") permission that allows everything
 # Read more here:
 # https://www.graph.cool/docs/reference/auth/authorization/overview-iegoo0heez
-types: ./types.graphql
 
 permissions:
   - operation: "User.create"
