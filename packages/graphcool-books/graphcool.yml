@@ -31,8 +31,24 @@ functions:
 # preconfigured the wildcard ("*") permission that allows everything
 # Read more here:
 # https://www.graph.cool/docs/reference/auth/authorization/overview-iegoo0heez
+types: ./types.graphql
+
 permissions:
-  - operation: "*"
+  - operation: "User.create"
+  - operation: "User.read"
+  - operation: "Book.create"
+    authenticated: true
+  - operation: UserBooks.connect
+    authenticated: true
+  - operation: "Book.read"
+    authenticated: true
+    query: ./permissions/book.graphql
+  - operation: "Book.update"
+    authenticated: true
+    query: ./permissions/book.graphql
+  - operation: "Book.delete"
+    authenticated: true
+    query: ./permissions/book.graphql
 
 
 # Your root tokens used for functions to get full access to the API
