@@ -1,5 +1,6 @@
 {
   "name": "prisma-books",
+  "version": "1.0.0",
   "scripts": {
     "start": "node src/index.js",
     "dev": "npm-run-all --parallel start playground",
