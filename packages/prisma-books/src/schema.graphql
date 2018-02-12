@@ -1,13 +1,9 @@
-# import Post from "./generated/prisma.graphql"
+# import Book from "./generated/prisma.graphql"
 
 type Query {
-  feed: [Post!]!
-  drafts: [Post!]!
-  post(id: ID!): Post
+  fetchAllBooks: [Book!]!
 }
 
 type Mutation {
-  createDraft(title: String!, text: String): Post
-  deletePost(id: ID!): Post
-  publish(id: ID!): Post
+  createBook(title: String!, description: String!): Book!
 }
