@@ -1,6 +1,15 @@
-type Post {
+type Book {
   id: ID! @unique
-  isPublished: Boolean! @default(value: false)
-  title: String!
-  text: String!
+  createdAt:DateTime!
+  updatedAt: DateTime!
+  title: String! @unique
+  description: String!
+  owner: User
+}
+
+type User {
+  id: ID! @unique
+  email: String! @unique
+  name: String!
+  books: [Book!]!
 }
