@@ -19,6 +19,7 @@ type User implements Node {
   email: String!
   name: String!
   books(where: BookWhereInput, orderBy: BookOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Book!]
+  password: String!
 }
 
 
@@ -263,6 +264,7 @@ type UserConnection {
 input UserCreateInput {
   email: String!
   name: String!
+  password: String!
   books: BookCreateManyWithoutOwnerInput
 }
 
@@ -274,6 +276,7 @@ input UserCreateOneWithoutBooksInput {
 input UserCreateWithoutBooksInput {
   email: String!
   name: String!
+  password: String!
 }
 
 type UserEdge {
@@ -288,6 +291,8 @@ enum UserOrderByInput {
   email_DESC
   name_ASC
   name_DESC
+  password_ASC
+  password_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -298,6 +303,7 @@ type UserPreviousValues {
   id: ID!
   email: String!
   name: String!
+  password: String!
 }
 
 type UserSubscriptionPayload {
@@ -320,6 +326,7 @@ input UserSubscriptionWhereInput {
 input UserUpdateInput {
   email: String
   name: String
+  password: String
   books: BookUpdateManyWithoutOwnerInput
 }
 
@@ -335,6 +342,7 @@ input UserUpdateOneWithoutBooksInput {
 input UserUpdateWithoutBooksDataInput {
   email: String
   name: String
+  password: String
 }
 
 input UserUpdateWithoutBooksInput {
@@ -393,6 +401,20 @@ input UserWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
   books_every: BookWhereInput
   books_some: BookWhereInput
   books_none: BookWhereInput

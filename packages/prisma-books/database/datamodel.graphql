@@ -12,4 +12,5 @@ type User {
   email: String! @unique
   name: String!
   books: [Book!]!
+  password: String!
 }
