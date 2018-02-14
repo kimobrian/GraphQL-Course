@@ -4,6 +4,14 @@ type Query {
   fetchAllBooks: [Book!]!
 }
 
+type User {
+  id: ID!
+  name: String!
+  email: String!
+}
+
 type Mutation {
   createBook(title: String!, description: String!): Book!
+  signupUser(name: String!, email: String!, password: String!):User! 
+  loginUser(email: String!, password: String!): User!
 }
