@@ -1,5 +1,18 @@
 const { GraphQLServer } = require("graphql-yoga");
 const { Prisma } = require("prisma-binding");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const APP_SECRET = "super_secret123";
+
+function retrieveUserIdFromToken(ctx) {
+  const authToken = ctx.req.get("Authorization");
+  if (authToken) {
+    const token = authToken.replace("Bearer ", "");
+    const { userId } = jwt.verify(token, APP_SECRET);
+    return userId;
+  }
+  throw new Error("Authentication Failed");
+}
 
 const resolvers = {
   Query: {
@@ -11,9 +24,42 @@ const resolvers = {
     createBook: (parent, args, context, info) => {
       const { title, description } = args;
       return context.db.mutation.createBook(
-        { data: { title, description } },
+        {
+          data: {
+            title,
+            description
+          }
+        },
         info
       );
+    },
+    signupUser: async (parent, args, context, info) => {
+      const password = await bcrypt.hash(args.password, 10);
+      const user = await context.db.mutation.createUser({
+        data: { ...args, password }
+      });
+      return user;
+    },
+
+    loginUser: async (parent, args, context, info) => {
+      const user = await context.db.query.user({
+        where: { email: args.email }
+      });
+      if (!user) {
+        throw new Error(`Could not find user with email: ${args.email}`);
+      }
+
+      const valid = await bcrypt.compare(args.password, user.password);
+      if (!valid) {
+        throw new Error("Invalid password");
+      }
+
+      const token = jwt.sign({ userId: user.id }, APP_SECRET);
+
+      return {
+        token,
+        user
+      };
     }
   }
 };
