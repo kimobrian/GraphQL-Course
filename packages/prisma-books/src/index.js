@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const APP_SECRET = "super_secret123";
 
 function retrieveUserIdFromToken(ctx) {
-  const authToken = ctx.req.get("Authorization");
+  const authToken = ctx.request.get("Authorization");
   if (authToken) {
     const token = authToken.replace("Bearer ", "");
     const { userId } = jwt.verify(token, APP_SECRET);
@@ -23,11 +23,15 @@ const resolvers = {
   Mutation: {
     createBook: (parent, args, context, info) => {
       const { title, description } = args;
+      const userId = retrieveUserIdFromToken(context);
       return context.db.mutation.createBook(
         {
           data: {
             title,
-            description
+            description,
+            owner: {
+              connect: { id: userId }
+            }
           }
         },
         info
