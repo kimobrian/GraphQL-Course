@@ -1,24 +1,21 @@
 mutation {
-  first: createPost(data: {
+  first: createBook(data: {
     title: "Hello World"
-    text: "This is my first blog post ever!"
-    isPublished: true
+    description: "This is my first blog post ever!"
   }) {
     id
   }
   
-  second: createPost(data: {
+  second: createBook(data: {
     title: "My Second Post"
-    text: "My first post was good, but this one is better!"
-    isPublished: true
+    description: "My first post was good, but this one is better!"
   }) {
     id
   }
   
-  third: createPost(data: {
+  third: createBook(data: {
     title: "Solving World Hunger"
-    text: "This is a draft..."
-    isPublished: false
+    description: "This is a draft..."
   }) {
     id
   }
