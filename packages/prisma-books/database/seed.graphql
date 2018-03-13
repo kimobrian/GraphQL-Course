@@ -1,21 +1,21 @@
 mutation {
   first: createBook(data: {
-    title: "Hello World"
-    description: "This is my first blog post ever!"
+    title: "To Kill a Mockingbird"
+    description: "The novel examines racism in the American South through the innocent wide eyes of a clever young girl named Jean Louise (“Scout”) Finch"
   }) {
     id
   }
   
   second: createBook(data: {
-    title: "My Second Post"
-    description: "My first post was good, but this one is better!"
+    title: "The Great Gatsby"
+    description: "The novel is told from the perspective of a young man named Nick Carraway who has recently moved to New York City and is befriended by his eccentric nouveau riche neighbor with mysterious origins, Jay Gatsby"
   }) {
     id
   }
   
   third: createBook(data: {
-    title: "Solving World Hunger"
-    description: "This is a draft..."
+    title: "One Hundred Years of Solitude"
+    description: "he novel tells the story of seven generations of the Buendía family and follows the establishment of their town Macondo until its destruction along with the last of the family’s descendents."
   }) {
     id
   }
