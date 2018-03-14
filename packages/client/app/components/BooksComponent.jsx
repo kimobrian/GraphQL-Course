@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { List, ListItem } from 'material-ui/List';
 import CircularProgress from 'material-ui/CircularProgress';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import { Card, CardHeader, CardText } from 'material-ui/Card';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
 const getBooksQuery = gql`
 	query getAllBooks {
 		books: fetchAllBooks {
-            id
+			id
 			title
 			description
 		}
@@ -22,30 +22,41 @@ class BooksComponent extends Component {
 	}
 
 	render() {
-        let { error, loading, books } = this.props.data;
-        if (error) return <div> An Error Occurred</div>
-        else if (loading) return <div style={ styles.loaderSection }><CircularProgress /></div> 
-		else return (
-			<Card expanded>
-    <CardHeader
-      title="Books List"
-    />
-    <CardText expandable={true}>
-      <List>
-          { books.map(book=> {
-              return (<ListItem key = { book.id } primaryText = { <p> {book.title} </p>} secondaryText = { <p> { book.description } </p> } secondaryTextLines = { 2 }/>)
-          })}
-      </List>
-    </CardText>
-  </Card>
-		);
+		let { error, loading, books } = this.props.data;
+		if (error) return <div> An Error Occurred</div>;
+		else if (loading)
+			return (
+				<div style={styles.loaderSection}>
+					<CircularProgress />
+				</div>
+			);
+		else
+			return (
+				<Card expanded>
+					<CardHeader title="Books List" />
+					<CardText expandable={true}>
+						<List>
+							{books.map(book => {
+								return (
+									<ListItem
+										key={book.id}
+										primaryText={<p> {book.title} </p>}
+										secondaryText={<p> {book.description} </p>}
+										secondaryTextLines={2}
+									/>
+								);
+							})}
+						</List>
+					</CardText>
+				</Card>
+			);
 	}
 }
 
 const styles = {
-    loaderSection: {
-        textAlignt: "center"
-    }
+	loaderSection: {
+		textAlign: 'center'
+	}
 };
 
 const BooksComponentWithData = graphql(getBooksQuery)(BooksComponent);
