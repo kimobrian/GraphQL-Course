@@ -7,56 +7,56 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
 const getBooksQuery = gql`
-	query getAllBooks {
-		books: fetchAllBooks {
-			id
-			title
-			description
-		}
-	}
+  query getAllBooks {
+    books: fetchAllBooks {
+      id
+      title
+      description
+    }
+  }
 `;
 
 class BooksComponent extends Component {
-	constructor(props) {
-		super(props);
-	}
+  constructor(props) {
+    super(props);
+  }
 
-	render() {
-		let { error, loading, books } = this.props.data;
-		if (error) return <div> An Error Occurred</div>;
-		else if (loading)
-			return (
-				<div style={styles.loaderSection}>
-					<CircularProgress />
-				</div>
-			);
-		else
-			return (
-				<Card expanded>
-					<CardHeader title="Books List" />
-					<CardText expandable={true}>
-						<List>
-							{books.map(book => {
-								return (
-									<ListItem
-										key={book.id}
-										primaryText={<p> {book.title} </p>}
-										secondaryText={<p> {book.description} </p>}
-										secondaryTextLines={2}
-									/>
-								);
-							})}
-						</List>
-					</CardText>
-				</Card>
-			);
-	}
+  render() {
+    let { error, loading, books } = this.props.data;
+    if (error) return <div> An Error Occurred</div>;
+    else if (loading)
+      return (
+        <div style={styles.loaderSection}>
+          <CircularProgress />
+        </div>
+      );
+    else
+      return (
+        <Card expanded>
+          <CardHeader title="Books List" />
+          <CardText expandable={true}>
+            <List>
+              {books.map(book => {
+                return (
+                  <ListItem
+                    key={book.id}
+                    primaryText={<p> {book.title} </p>}
+                    secondaryText={<p> {book.description} </p>}
+                    secondaryTextLines={2}
+                  />
+                );
+              })}
+            </List>
+          </CardText>
+        </Card>
+      );
+  }
 }
 
 const styles = {
-	loaderSection: {
-		textAlign: 'center'
-	}
+  loaderSection: {
+    textAlign: 'center'
+  }
 };
 
 const BooksComponentWithData = graphql(getBooksQuery)(BooksComponent);

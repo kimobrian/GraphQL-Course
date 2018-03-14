@@ -12,27 +12,27 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloProvider } from 'react-apollo';
 
 const client = new ApolloClient({
-	link: new HttpLink({ uri: 'http://localhost:4000' }),
-	cache: new InMemoryCache()
+  link: new HttpLink({ uri: 'http://localhost:4000' }),
+  cache: new InMemoryCache()
 });
 
 const AppBarComponent = () => <AppBar title="GraphQL React" />;
 
 const routes = (
-	<MuiThemeProvider>
-		<ApolloProvider client={client}>
-			<BrowserRouter>
-				<div>
-					<AppBarComponent />
-					<br />
-					<Switch>
-						<Route exact path="/" component={BooksComponentWithData} />
-						<Route path="/login" component={Authentication} />
-					</Switch>
-				</div>
-			</BrowserRouter>
-		</ApolloProvider>
-	</MuiThemeProvider>
+  <MuiThemeProvider>
+    <ApolloProvider client={client}>
+      <BrowserRouter>
+        <div>
+          <AppBarComponent />
+          <br />
+          <Switch>
+            <Route exact path="/" component={BooksComponentWithData} />
+            <Route path="/login" component={Authentication} />
+          </Switch>
+        </div>
+      </BrowserRouter>
+    </ApolloProvider>
+  </MuiThemeProvider>
 );
 
 export default routes;
