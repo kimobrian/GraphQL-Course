@@ -6,6 +6,15 @@ import RaisedButton from 'material-ui/RaisedButton';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 
+
+const loginUser = gql`
+  mutation login($email: String!, $password: String!) {
+    user: loginUser(email: $email, password: $password) {
+      token
+    }
+  }
+`;
+
 class Login extends Component {
   constructor(props) {
     super();
@@ -33,6 +42,13 @@ class Login extends Component {
     if (!this.state.email) this.setState({ emailError: 'Email Required' });
     if (!this.state.password) this.setState({ passwordError: 'Password Required' });
     if (!this.state.password || !this.state.email) return;
+    this.props.loginUser(this.state.email, this.state.password).then(({ data })=> {
+      localStorage.setItem('authToken', data.user.token);
+      this.setState({ email: '', password: '' });
+    }).catch(err=>{
+      this.setState({ email: '', password: '' });
+      console.error('Error:', err.message);
+    });
   }
 
   render() {
@@ -44,6 +60,7 @@ class Login extends Component {
           onChange={this.updateEmail}
           ref="loginEmail"
           errorText={this.state.emailError}
+          value = { this.state.email }
         />
         <br />
         <TextField
@@ -52,6 +69,7 @@ class Login extends Component {
           floatingLabelText="Password"
           errorText={this.state.passwordError}
           onChange={ this.updatePassword }
+          value = { this.state.password }
         />
         <br />
         <RaisedButton label="Login" primary={true} onClick={this.loginUser} />
@@ -59,6 +77,15 @@ class Login extends Component {
     );
   }
 }
+
+const LoginComponentWithData = graphql(loginUser, {
+  props: ({ mutate }) => ({
+    loginUser: (email, password) =>
+      mutate({
+        variables: { email, password }
+      })
+  })
+})(Login);
 
 const registerUser = gql`
   mutation signUpUser($name: String!, $email: String!, $password: String!) {
@@ -175,7 +202,7 @@ class Register extends Component {
 }
 
 const RegisterComponentWithData = graphql(registerUser, {
-  props: ({ mutate, data }) => ({
+  props: ({ mutate }) => ({
     signUpUser: (name, email, password) =>
       mutate({
         variables: { name, email, password }
@@ -195,7 +222,7 @@ export default class Authentication extends Component {
           <CardText expandable={true}>
             <Tabs>
               <Tab label="LOGIN">
-                <Login />
+                <LoginComponentWithData />
               </Tab>
               <Tab label="REGISTER">
                 <RegisterComponentWithData />
