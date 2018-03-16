@@ -45,8 +45,9 @@ class Login extends Component {
     this.props.loginUser(this.state.email, this.state.password).then(({ data })=> {
       localStorage.setItem('authToken', data.user.token);
       this.setState({ email: '', password: '' });
+      window.location.href="/";
     }).catch(err=>{
-      this.setState({ email: '', password: '' });
+      this.setState({ email: '', password: '', emailError: 'Invalid Login Credentials' });
       console.error('Error:', err.message);
     });
   }
@@ -153,9 +154,9 @@ class Register extends Component {
     }).catch(error=> {
       this.setState({
         name: "", email: "", password: "", passwordConfirm: ""
-      })
+      });
       console.error(error.message);
-    });
+    })
   }
 
   render() {
@@ -235,7 +236,7 @@ export default class Authentication extends Component {
   }
 }
 
-const styles = {
+export const styles = {
   flexContainer: {
     display: 'flex',
     width: '50%',
