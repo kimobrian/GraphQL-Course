@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
-import { Tabs, Tab } from 'material-ui/Tabs';
-import { Card, CardText } from 'material-ui/Card';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
-import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
-
+import React, { Component } from "react";
+import { Tabs, Tab } from "material-ui/Tabs";
+import { Card, CardText } from "material-ui/Card";
+import TextField from "material-ui/TextField";
+import RaisedButton from "material-ui/RaisedButton";
+import gql from "graphql-tag";
+import { graphql } from "react-apollo";
 
 const loginUser = gql`
   mutation login($email: String!, $password: String!) {
@@ -16,45 +15,45 @@ const loginUser = gql`
 `;
 
 class Login extends Component {
-  constructor(props) {
+  constructor () {
     super();
     this.state = {
       passwordError: null,
       emailError: null,
-      email: '',
-      password: ''
+      email: "",
+      password: ""
     };
     this.updateEmail = this.updateEmail.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
     this.loginUser = this.loginUser.bind(this);
   }
 
-  updateEmail(_, newValue) {
+  updateEmail (_, newValue) {
     this.setState({ email: newValue });
   }
 
-  updatePassword(_, newValue) {
+  updatePassword (_, newValue) {
     this.setState({ password: newValue });
   }
 
-  loginUser() {
-    this.setState({ emailError: '', passwordError: '' });
-    if (!this.state.email) this.setState({ emailError: 'Email Required' });
-    if (!this.state.password) this.setState({ passwordError: 'Password Required' });
+  loginUser () {
+    this.setState({ emailError: "", passwordError: "" });
+    if (!this.state.email) this.setState({ emailError: "Email Required" });
+    if (!this.state.password) this.setState({ passwordError: "Password Required" });
     if (!this.state.password || !this.state.email) return;
     this.props.loginUser(this.state.email, this.state.password).then(({ data })=> {
-      localStorage.setItem('authToken', data.user.token);
-      this.setState({ email: '', password: '' });
+      localStorage.setItem("authToken", data.user.token);
+      this.setState({ email: "", password: "" });
       window.location.href="/";
     }).catch(err=>{
-      this.setState({ email: '', password: '', emailError: 'Invalid Login Credentials' });
-      console.error('Error:', err.message);
+      this.setState({ email: "", password: "", emailError: "Invalid Login Credentials" });
+      console.error("Error:", err.message); // eslint-disable-line no-console
     });
   }
 
-  render() {
+  render () {
     return (
-      <div style={styles.center}>
+      <div style={ styles.center }>
         <TextField
           hintText="User Email"
           floatingLabelText="User Email"
@@ -99,17 +98,17 @@ const registerUser = gql`
 `;
 
 class Register extends Component {
-  constructor(props) {
+  constructor () {
     super();
     this.state = {
       passwordError: null,
       emailError: null,
       nameError: null,
       passwordConfirmError: null,
-      name: '',
-      email: '',
-      password: '',
-      passwordConfirm: ''
+      name: "",
+      email: "",
+      password: "",
+      passwordConfirm: ""
     };
 
     this.updateName = this.updateName.bind(this);
@@ -119,47 +118,47 @@ class Register extends Component {
     this.registerNewUser = this.registerNewUser.bind(this);
   }
 
-  updateName(_, newValue) {
+  updateName (_, newValue) {
     this.setState({ name: newValue });
   }
 
-  updateEmail(_, newValue) {
+  updateEmail (_, newValue) {
     this.setState({ email: newValue });
   }
 
-  updatePassword(_, newValue) {
+  updatePassword (_, newValue) {
     this.setState({ password: newValue });
   }
 
-  updatePasswordConfirmation(_, newValue) {
+  updatePasswordConfirmation (_, newValue) {
     this.setState({ passwordConfirm: newValue });
   }
 
-  registerNewUser() {
-    this.setState({ nameError: '', emailError: '', passwordError: '', passwordConfirmError: '' });
-    if (!this.state.name) this.setState({ nameError: 'Name Required' });
-    if (!this.state.email) this.setState({ emailError: 'Email Required' });
-    if (!this.state.password) this.setState({ passwordError: 'Password Required' });
-    if (!this.state.passwordConfirm) this.setState({ passwordConfirmError: 'Password Confirmation Required' });
+  registerNewUser () {
+    this.setState({ nameError: "", emailError: "", passwordError: "", passwordConfirmError: "" });
+    if (!this.state.name) this.setState({ nameError: "Name Required" });
+    if (!this.state.email) this.setState({ emailError: "Email Required" });
+    if (!this.state.password) this.setState({ passwordError: "Password Required" });
+    if (!this.state.passwordConfirm) this.setState({ passwordConfirmError: "Password Confirmation Required" });
     if (!this.state.name || !this.state.email || !this.state.password || !this.state.passwordConfirm) return;
     if (this.state.password !== this.state.passwordConfirm) {
-      this.setState({ passwordError: 'Password and Confirmation Password do not match' });
+      this.setState({ passwordError: "Password and Confirmation Password do not match" });
       return;
     }
     this.props.signUpUser(this.state.name, this.state.email, this.state.password).then(data => {
-      console.log("User created Successfully:", data);
+      console.log("User created Successfully:", data); // eslint-disable-line no-console
       this.setState({
         name: "", email: "", password: "", passwordConfirm: ""
-      })
+      });
     }).catch(error=> {
       this.setState({
         name: "", email: "", password: "", passwordConfirm: ""
       });
-      console.error(error.message);
-    })
+      console.error(error.message); // eslint-disable-line no-console
+    });
   }
 
-  render() {
+  render () {
     return (
       <div style={styles.center}>
         <TextField
@@ -211,42 +210,36 @@ const RegisterComponentWithData = graphql(registerUser, {
   })
 })(Register);
 
-export default class Authentication extends Component {
-  constructor(props) {
-    super();
-  }
+const Authentication = ()=> (
+  <div style={styles.flexContainer}>
+    <Card expanded style={styles.card}>
+      <CardText expandable={true}>
+        <Tabs>
+          <Tab label="LOGIN">
+            <LoginComponentWithData />
+          </Tab>
+          <Tab label="REGISTER">
+            <RegisterComponentWithData />
+          </Tab>
+        </Tabs>
+      </CardText>
+    </Card>
+  </div>
+);
 
-  render() {
-    return (
-      <div style={styles.flexContainer}>
-        <Card expanded style={styles.card}>
-          <CardText expandable={true}>
-            <Tabs>
-              <Tab label="LOGIN">
-                <LoginComponentWithData />
-              </Tab>
-              <Tab label="REGISTER">
-                <RegisterComponentWithData />
-              </Tab>
-            </Tabs>
-          </CardText>
-        </Card>
-      </div>
-    );
-  }
-}
+export default Authentication;
 
 export const styles = {
   flexContainer: {
-    display: 'flex',
-    width: '50%',
-    justifyContent: 'center',
-    margin: '0px auto'
+    display: "flex",
+    width: "50%",
+    justifyContent: "center",
+    margin: "0px auto"
   },
   card: {
-    width: '100%'
+    width: "100%"
   },
   center: {
-    textAlign: 'center'
+    textAlign: "center"
   }
 };

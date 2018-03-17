@@ -1,3 +1,3 @@
 # Lesson3A
 
-> **Lesson3A** - setup a simple React application, connect with GraphQL client and display a list of books.
+> **Lesson3A-3F** - Implementation for `React`. Code under packages/client

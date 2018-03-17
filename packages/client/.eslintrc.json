@@ -1,0 +1,60 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "node": true
+    },
+    "extends": ["eslint:recommended"],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true,
+            "jsx": true
+        },
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "indent": [2, 2, {
+            "ignoredNodes": ["JSXElement > *"]
+        }],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "space-before-function-paren": ["error", {
+            "anonymous": "always",
+            "named": "always",
+            "asyncArrow": "always"
+        }],
+        "comma-spacing": ["error", { 
+            "before": false, 
+            "after": true 
+        }],
+        "semi-spacing": ["error", {"before": false, "after": true}],
+        "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }],
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
+        "react/jsx-wrap-multilines": "error",
+        "react/require-render-return": "error",
+        "react/jsx-pascal-case": "error",
+        "react/jsx-no-target-blank": "error",
+        "react/jsx-closing-tag-location": "error",
+        "react/jsx-indent": ["error", 2],
+        "react/jsx-indent-props": ["error", 2],
+        "react/prefer-stateless-function": [1],
+        "jsx-quotes": ["off", "prefer-double"],
+        "key-spacing": ["error", { "beforeColon": false, "afterColon": true }],
+        "no-mixed-spaces-and-tabs": "error"
+    }
+}
