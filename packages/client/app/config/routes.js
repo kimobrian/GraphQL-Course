@@ -25,9 +25,17 @@ const authLink = setContext((_, { headers }) => {
   }
 });
 
+const defaultOptions = {
+  query: {
+    fetchPolicy: 'cache-and-network',
+    errorPolicy: 'all',
+  }
+};
+
 const client = new ApolloClient({
   link: authLink.concat(new HttpLink({ uri: 'http://localhost:4000' })),
   cache: new InMemoryCache(),
+  q
   connectToDevTools: true
 });
 
