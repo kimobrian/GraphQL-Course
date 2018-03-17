@@ -5,6 +5,19 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import { styles } from './Authentication';
 import { Link } from 'react-router-dom';
+import gql from 'graphql-tag';
+import { graphql } from 'react-apollo';
+import { getBooksQuery } from './BooksComponent';
+
+export let createBookMutation = gql`
+  mutation createBook($title: String!, $description: String!) {
+    createBook(title: $title, description: $description) {
+      id
+      title
+      description
+    }
+  }
+`;
 
 class NewBook extends Component {
 	constructor(props) {
@@ -25,7 +38,13 @@ class NewBook extends Component {
 		this.setState({ titleError: null, descriptionError: null });
 		if (!this.state.title) this.setState({ titleError: 'Book Title Required' });
 		if (!this.state.description) this.setState({ descriptionError: 'Book Description Required' });
-		if (!this.state.title || !this.state.description) return;
+    if (!this.state.title || !this.state.description) return;
+    this.props.createNewBook(this.state.title, this.state.description).then(({ data })=> {
+      this.setState({ title: '', description: '' });
+      window.location.href="/";
+    }).catch(err => {
+      console.log('Error:::', err);
+    });
 	}
 
 	updateTitle(_, newValue) {
@@ -72,4 +91,34 @@ class NewBook extends Component {
 	}
 }
 
-export default NewBook;
+const NewBookComponentWithData = graphql(createBookMutation, {
+  props: ({ ownProps, mutate }) => ({
+    createNewBook: (title, description) =>
+      mutate({
+        variables: { title, description },
+        // Optimistic UI updates
+        optimisticResponse: {
+          createBook: {
+            title,
+            description,
+            id: Math.round(Math.random() * -1000000), // Generate a random ID
+            __typename: 'Book',
+          },
+       },
+        update: (store, { data: { createBook } }) => {
+          // Read the data from our cache for this query.
+          try {
+            const data = store.readQuery({ query: getBooksQuery });
+            // Add our book from the mutation to the end.
+            data.books.push(createBook);
+            // Write our data back to the cache.
+            store.writeQuery({ query: getBooksQuery, data });
+          } catch(err){
+            console.log('Cache Error:', err);
+          }
+        },
+      })
+  })
+})(NewBook);
+
+export default NewBookComponentWithData;
