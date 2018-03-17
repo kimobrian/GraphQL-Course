@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import FlatButton from 'material-ui/FlatButton';
 import { isLoggedIn } from '../utils';
 
-const getBooksQuery = gql`
+export const getBooksQuery = gql`
 	query getAllBooks {
 		books: fetchAllBooks {
 			id
