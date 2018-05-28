@@ -11,3 +11,4 @@ A complete beginner to intermediate GraphQL course.
 - **lesson2B** - Implementation using `graphql-yoga` Code under `packages/yoga`
 - **lesson2C** - Implementation for `graphcool`. Code under `packages/graphcool-books`
 - **lesson2d** - Implementation for `prisma`. Code under `packages/prisma-books`
+- **Lesson3A-3F** - Implementation for `React`. Code under `packages/client`
