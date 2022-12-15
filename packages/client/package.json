@@ -17,7 +17,7 @@
     "apollo-link-context": "^1.0.7",
     "apollo-link-http": "^1.5.3",
     "axios": "^0.16.1",
-    "express": "^4.15.3",
+    "express": "^4.17.3",
     "graphql": "^0.13.1",
     "graphql-tag": "^2.8.0",
     "jwt-decode": "^2.2.0",
